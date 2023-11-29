@@ -1,0 +1,34 @@
+<!-- 201935222 김민석 -->
+<% if (board.length === 0) { %>
+    <p>자료 없음</p>
+<% } else { %>
+    <table class="table table-bordered border-primary">
+        <thead><td>작성자</td><td>제목</td><td>날짜</td></thead> 
+        <% var i=0; while (i < board.length) { %>
+        <tr>
+            <td><%=board[i].name%></td>
+            <td><a href="/board/detail/<%=board[i].board_id%>/<%=pNum%>"><%=board[i].title%></a></td>
+            <td><%=board[i].date%></td>
+        </tr>
+        <% i+=1; } %>
+    </table>
+<% } %>
+
+
+
+<% var j = 1; while (j <= totalPages) { 
+    if(j == pNum){ %>
+    <span style="font-weight : bold;"><%=j%></span> &nbsp;&nbsp;
+<% } else { %>
+    <span><a href="/board/view/<%=board[0].type_id%>/<%=j%>"><%=j%></a></span> &nbsp;&nbsp;
+<% } 
+    j++ 
+} %>
+
+<% if (board[0].write_YN =='Y' && classes =='02' || classes =='01'){  %>
+
+    <a href="/board/create/<%=board[0].type_id%>" class="btn btn-info me-md-2 float-end">글쓰기</a>
+
+ <% } %>
+
+ 

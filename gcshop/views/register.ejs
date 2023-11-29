@@ -1,0 +1,32 @@
+<!-- 201935222 김민석 -->
+<div class="container">
+    <h2>사용자</h2>
+    <form action="/auth/register_process" method="post">
+        <div class="mb-3">
+            <label class="form-label" for="id">loginId</label>
+            <input class="form-control" type="text" name="loginid" style="width:300px;" value="<%= person.loginid %>" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="id">password</label>
+            <input class="form-control" type="text" name="password" style="width:300px;" value="<%= person.password %>" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="id">name</label>
+            <input class="form-control" type="text" name="name" style="width:300px" value="<%= person.name %>" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="id">address</label>
+            <input class="form-control" type="text" name="address" style="width:300px" value="<%= person.address %>" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="id">tel</label>
+            <input class="form-control" type="text" name="tel" style="width:300px" value="<%= person.tel %>" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="id">birth</label>
+            <input class="form-control" type="text" name="birth" style="width:300px" value="<%= person.birth %>" />
+        </div>
+        <button class="btn btn-outline-primary btn-sm" type="submit">입력</button>
+    </form>
+</div>

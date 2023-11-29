@@ -1,0 +1,45 @@
+<!-- 201935222 김민석 -->
+<% if (list.length === 0) { %>
+    <p>자료 없음</p>
+<% } else { %>
+<table class="table table-bordered border-primary">
+    <thead><td>loginId</td><td>password</td><td>name</td><td>address</td><td>tel</td><td>birth</td><td>class</td>
+       
+    </thead> 
+    <% var i=0; while (i < list.length) { %>
+    <tr>
+        <td>
+            <%=list[i].loginid%>
+        </td>
+        <td>
+            <%=list[i].password%>
+        </td>
+        <td>
+            <%=list[i].name%>
+        </td>
+        <td>
+            <%=list[i].address%>
+        </td>
+        <td>
+            <%=list[i].tel%>
+        </td>
+        <td>
+            <%=list[i].birth%>
+        </td>
+        <td>
+            <%=list[i].class%>
+        </td>
+        <% if (id === 'u') { %>
+            <td>
+                <a href="/person/update/<%=list[i].loginid%>">수정</a>
+            </td>
+            <td>
+                <a href="/person/delete/<%=list[i].loginid%>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
+            </td>
+        <% } %>
+    </tr>
+    <% i+=1; } %>
+    
+
+</table>
+<% } %>

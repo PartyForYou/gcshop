@@ -1,0 +1,107 @@
+<!-- 201935222 김민석 -->
+<% if (list.length === 0) { %>
+    <p>자료 없음</p>
+<% } else { %>
+    <table class="table table-bordered">
+        <tr>
+            <td rowspan="5" style="border-right: 1px solid #ddd; padding: 10px;">
+                <img src="<%=list.image%>" alt="<%=list.name%>" style="max-width: 100%; max-height: 100%;">
+            </td>
+            <td>
+                <%=list.name%>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                가격: <%=list.price%>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                브랜드: <%=list.brand%>
+            </td>
+        </tr>
+        <tr id="quantitySection" style="display: none">
+            <td>
+                <label for="quantity">수량:</label>
+                <input type="number" name="quantity" id="quantity" value="1" min="1" onchange="updateQuantity()">
+            </td>
+        </tr>
+        
+        <tr id="quantitySection2" style="display: none">
+            <td>
+                <form method="post" action="/purchase/cart_process" style="display: inline-block; margin-right: 10px;">
+                    
+                    <input type="hidden" name="mer_id" value="<%= list.mer_id %>">
+                    <button class="btn btn-outline-primary btn-sm" type="submit">장바구니</button>
+                </form>
+                <button class="btn btn-outline-primary btn-sm" type="button" onclick="checkout()">결재</button>
+            </td>
+        </tr>
+       
+        <% if (classes =='02'){  %>
+        <tr id="purchaseSection">
+            <td>
+                <button class="btn btn-outline-primary btn-sm" type="button" onclick="showPurchaseSection()">구매</button>
+                <form method="post" action="/purchase/cart_process" style="display: inline-block; margin-right: 10px;">
+                    <input type="hidden" name="mer_id" value="<%= list.mer_id %>">
+                    <button class="btn btn-outline-primary btn-sm" type="submit">장바구니</button>
+                </form>
+            </td>
+        </tr>
+        <% } %>
+    </table>
+
+    <script>
+        var quantityValue = 1;
+
+        document.getElementById('cartButton').addEventListener('click', function() {
+            window.location.href = '/purchase/cart/view/v';
+         });
+        function showPurchaseSection() {
+            document.getElementById('purchaseSection').style.display = 'none';
+            document.getElementById('quantitySection').style.display = 'block';
+            document.getElementById('quantitySection2').style.display = 'block';
+
+            history.pushState({}, null, '/purchase/detail/<%=list.mer_id%>');
+        }
+
+        function updateQuantity() {
+            quantityValue = document.getElementById('quantity').value;
+
+            history.replaceState({}, null, '/purchase/detail/<%=list.mer_id%>' );
+        }
+
+        function checkout() {
+            var forms = document.forms;
+            var form = forms[0];
+
+            if (form) {
+                // Set the form action and method
+                form.action = '/purchase/detail_create';
+                form.method = 'POST';
+
+                // Append additional hidden input fields
+                var hiddenFields = [
+                    { name: 'merId', value: '<%= list.mer_id %>' },
+                    { name: 'price', value: '<%= list.price %>' },
+                    { name: 'quantity', value: quantityValue }
+                ];
+
+                hiddenFields.forEach(function (field) {
+                    var input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = field.name;
+                    input.value = field.value;
+                    form.appendChild(input);
+                });
+
+                // Submit the form
+                form.submit();
+            } else {
+                console.error("폼을 찾을 수 없습니다.");
+            }
+        }
+    </script>
+
+<% } %>

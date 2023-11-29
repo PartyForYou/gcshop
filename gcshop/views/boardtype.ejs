@@ -1,0 +1,35 @@
+<!-- 201935222 김민석 -->
+<% if (boardtypes.length === 0) { %>
+    <p>자료 없음</p>
+<% } else { %>
+    <table class="table table-bordered">
+        <% var i=0; while (i < boardtypes.length) { %>
+        <tr>
+            <td>
+                <%=boardtypes[i].title%>
+            </td>
+            <td>
+                <%=boardtypes[i].numPerPage%>
+            </td>
+            <td>
+                <%=boardtypes[i].description%>
+            </td>
+            <td>
+                <%=boardtypes[i].write_YN%>
+            </td>
+            <td>
+                <%=boardtypes[i].re_YN%>
+            </td>
+            
+            <% if (id === 'U') { %>
+            <td>
+                <a href="/board/type/update/<%=boardtypes[i].type_id%>">수정</a>
+            </td>
+            <td>
+                <a href="/board/type/delete/<%=boardtypes[i].type_id%>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
+            </td>
+            <% } %>
+        </tr>
+        <% i+=1; } %>
+    </table>
+<% } %>

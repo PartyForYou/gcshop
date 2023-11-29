@@ -1,0 +1,42 @@
+<!-- 201935222 김민석 -->
+<% if (list.length === 0) { %>
+    <p>자료 없음</p>
+<% } else { %>
+<table class="table table-bordered border-primary">
+    <thead><td>대분류</td><td>대분류명</td><td>소분류</td><td>소분류명</td><td>시작일</td><td>종료일</td>
+       
+    </thead> 
+    <% var i=0; while (i < list.length) { %>
+    <tr>
+        <td>
+            <%=list[i].main_id%>
+        </td>
+        <td>
+            <%=list[i].main_name%>
+        </td>
+        <td>
+            <%=list[i].sub_id%>
+        </td>
+        <td>
+            <%=list[i].sub_name%>
+        </td>
+        <td>
+            <%=list[i].start%>
+        </td>
+        <td>
+            <%=list[i].end%>
+        </td>
+        <% if (id === 'u') { %>
+            <td>
+                <a href="/code/update/<%=list[i].main_id%>/<%=list[i].sub_id%>">수정</a>
+            </td>
+            <td>
+                <a href="/code/delete/<%=list[i].main_id%>/<%=list[i].sub_id%>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
+            </td>
+        <% } %>
+    </tr>
+    <% i+=1; } %>
+    
+
+</table>
+<% } %>

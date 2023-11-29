@@ -1,0 +1,105 @@
+<!-- 201935222 김민석 -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-body fixed-top" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/shop/all">Gachon</a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- 메뉴 시작 -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/shop/all">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/shop/0001">의류</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/shop/0002">식품</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/shop/0003">가전</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/shop/0004">도서</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/shop/0005">스포츠</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/shop/0006">자동차</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/shop/0007">생활용품</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/shop/0008">완구</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            게시판
+          </a>
+          <ul class="dropdown-menu">
+            <% var i = 0
+              while(i < boardtypes.length)
+              { %>
+              <li><a class="dropdown-item" href="/board/view/<%=boardtypes[i].type_id%>/1"><%-boardtypes[i].title%></a></li>
+              <% i += 1 } %> 
+          </ul>        
+        </li>
+
+      </ul>
+      <!-- 메뉴 끝 -->
+
+      <!-- 검색창 시작 -->
+      <form class="d-flex" role="search" action="/shop/search" method="POST">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+      <!-- 검색창 끝 -->
+
+      <!-- 로그인 -->
+      <ul class="me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button type="button" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+              aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          </a>
+          <ul class="dropdown-menu">
+            <% if(logined==='NO' ){ %>
+
+              <li><a class="dropdown-item" href="/auth/login">로그인</a></li>
+
+              <li><a class="dropdown-item" href="/auth/register">회원가입</a></li>
+              <li><a class="dropdown-item" href="#">아이디/비번찾기</a></li>
+              <% } %>
+              <% if(logined==='YES' ){ %>
+                <li><a class="dropdown-item" href="/auth/logout_process" >로그아웃</a></li>
+              <% } %>
+          </ul>
+        </li>
+      </ul>
+      <!-- 로그인 끝 -->
+
+    </div>
+    <% if(logined==='YES' ){ %>
+    <nav class="navbar bg-body-tertiary">
+      <a href="/purchase/cart/view/v" class="btn btn-sm btn-outline-warning me-2" type="button">장바구니</a>
+    </nav>
+
+      <nav class="navbar bg-body-tertiary">
+        <a href="/purchase/view/v" class="btn btn-sm btn-outline-warning me-2" type="button">구매내역</a>
+      </nav>
+      <% } %>
+
+
+
+        <nav class="navbar">
+          <div class="container-fluid text-white">
+            <%=who%>
+          </div>
+        </nav>
+
+  </div>
+</nav>

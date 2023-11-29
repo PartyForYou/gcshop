@@ -1,0 +1,69 @@
+<!-- 201935222 김민석 -->
+<% if (classes=='01' ) { %>
+    <form action="/purchase/cart/search" method="post">
+        <input type="hidden" name="id" value="<%=id%>" />
+        <input type="text" name="search" placeholder="아이디 입력">
+        <button type="submit">검색</button>
+    </form>
+    <% } %>
+        <form method="post" action="/purchase/purchase_input">
+            <table class="table table-bordered border-primary">
+                <thead>
+                    <% if (classes=='01' ){ %>
+                        <td>id</td>
+                        <% } else{ %>
+                            <td>구매선택</td>
+                            <% } %>
+                                <td>상품</td>
+                                <td>상품명</td>
+                                <td>단가</td>
+                                <td>담은날</td>
+                                <td>수량</td>
+
+                </thead>
+
+                <% var i=0; while (i < list.length) { %>
+                    <tr>
+                        <% if (classes=='01' ){ %>
+                            <td>
+                                <%= list[i].loginid %>
+                            </td>
+                            <% } else{ %>
+                                <td>
+                                    <input type="checkbox" name="check" value="<%= list[i].cart_id %>">
+                                </td>
+                                <% } %>
+                                    <td>
+                                        <img src="<%=list[i].image%>" alt="<%=list[i].name%>">
+                                    </td>
+                                    <td>
+                                        <%=list[i].name%>
+                                    </td>
+                                    <td>
+                                        <%=list[i].price%>
+                                    </td>
+                                    <td>
+                                        <%=list[i].date%>
+                                    </td>
+                                    <td>
+                                        <input type="number" name="quantity" placeholder="Input number" value="1">
+                                    </td>
+                                    <% if (id==='u' ) { %>
+                                        <td>
+                                            <a href="/purchase/cart/update/<%=list[i].cart_id%>">수정</a>
+                                        </td>
+                                        <td>
+                                            <a href="/purchase/cart/delete/<%=list[i].cart_id%>"
+                                                onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
+                                        </td>
+                                        <% } %>
+
+                                            <input type="hidden" name="price" value="<%= list[i].price %>">
+                    </tr>
+                    <% i +=1; } %>
+            </table>
+
+            <% if (classes=='02' ){ %>
+                <button class="btn btn-outline-primary btn-sm" type="submit">구매하기</button>
+                <% } %>
+        </form>

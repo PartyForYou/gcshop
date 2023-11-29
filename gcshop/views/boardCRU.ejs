@@ -1,0 +1,134 @@
+<!-- 201935222 김민석 -->
+<div class="container">	
+	
+    <% if(cru==='R'){ %>
+			<div class="mb-3">
+				<input type = "hidden" name="type_id" value = "<%=board.type_id%>">
+				<input type = "hidden" name="board_id" value = "<%=board.board_id%>">
+				<label class="form-label" for="id">제목</label> 
+				<input class="form-control" type="text" name="title" style = "width:300px;" value = "<%= board.title %>" disabled/>
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="id">작성자</label> 
+				<input class="form-control" type="text" name="name" style = "width:300px;" value = "<%=board.name%>" disabled/>
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="id">작성일</label> 
+				<input class="form-control" type="text" name="date" style = "width:300px;" value = "<%=board.date%>" disabled/>
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="id">내용</label> 
+				<textarea class="form-control" type="text" name="content" style = "width:800px;height: 200px;" disabled><%=board.content%></textarea>
+			</div>
+			<% if (classes =='01' || board.loginid == loginid){  %>
+				<input type = "hidden" name="type_id" value = "<%=board.type_id%>">
+				<input type = "hidden" name="board_id" value = "<%=board.board_id%>">
+				<a href="/board/delete/<%=board.board_id%>/<%=board.type_id%>/<%=pNum%>" class="btn btn-info me-md-2 float-end" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
+				<a href="/board/update/<%=board.board_id%>/<%=board.type_id%>/<%=pNum%>"  class="btn btn-info me-md-2 float-end">수정</a>
+				
+				<% } %>
+				<a href="/board/view/<%=board.type_id%>/<%=pNum%>" class="btn btn-info me-md-2 float-end">목록</a>
+
+<br></br>
+
+
+
+<!-- 기존 댓글 표시 -->
+<div class="comments">
+    <%= comment.length %> 개의 댓글
+
+    <% for (var i = 0; i < comment.length; i++) { %>
+        <div class="comment-container row" style="border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px; padding: 10px;">
+            <div class="col-8">
+                <div class="comment-header">
+                    <strong><%= comment[i].name %></strong>
+                </div>
+                <div class="comment-content">
+                    <%= comment[i].content %>
+                </div>
+            </div>
+            <div class="col-4 text-end">
+                <% if (comment[i].loginid === loginid || classes === '01') { %>
+                    <!-- Add a form to submit the delete request -->
+                    <form method="POST" action="/board/delete_comment/<%= comment[i].comment_id %>" onsubmit="return confirm('정말로 삭제하시겠습니까?');">
+                        <input type="hidden" name="type_id" value="<%= board.type_id %>">
+                        <input type="hidden" name="board_id" value="<%= board.board_id %>">
+                        <button type="submit" class="btn btn-danger">삭제</button>
+                    </form>
+                <% } %>
+            </div>
+        </div>
+    <% } %>
+</div>
+
+
+			
+		
+<% if (board.re_YN === 'Y') { %>
+    <!-- 새로운 댓글을 추가하는 폼 -->
+    <form action="/board/add_comment/<%= board.board_id %>/<%= board.type_id %>" method="post">
+        <div class="mb-3">
+            <label class="form-label" for="comment">댓글 추가</label>
+            <textarea class="form-control" name="comment" style="width:800px;height: 100px;"></textarea>
+        </div>
+        <button class="btn btn-outline-primary btn-sm" type="submit">댓글 등록</button>
+    </form>
+<% } %>
+
+
+
+
+		<% } else if(cru=='C'){ %>
+    <h2> 생성</h2>
+	<form action="/board/create_process" method="post" >
+        <input type = "hidden" name="type_id" value = "<%=type_id%>">
+        <input type = "hidden" name="loginid" value = "<%=loginid%>">
+		<div class="mb-3">
+			<label class="form-label" for="id">제목</label> 
+			<input class="form-control" type="text" name="title" style = "width:300px;" />
+		</div>
+        <div class="mb-3">
+			<label class="form-label" for="id">작성자</label> 
+			<input class="form-control" type="text" name="loginid" value = "<%=who%>" style = "width:300px;" disabled/>
+		</div>
+        <div class="mb-3">
+			<label class="form-label" for="id">내용</label> 
+			<textarea class="form-control" name="content" style = "width:800px;height: 200px;" ></textarea>
+		</div>
+        <div class="mb-3">
+			<label class="form-label" for="id">갱신삭제시 비밀번호</label> 
+			<input class="form-control" type="text" name="password" style = "width:300px;" />
+		</div>
+        <button class="btn btn-outline-primary btn-sm" type="submit">생성</button>
+	</form>
+		<% } else if(cru=='U'){ %>
+			<form action="/board/update_process" method="post" >
+				<input type = "hidden" name = "board_id" value="<%= board.board_id %>">
+				<input type = "hidden" name="pNum" value = "<%=pNum%>">
+				<div class="mb-3">
+					<label class="form-label" for="id">제목</label> 
+					<input class="form-control" type="text" name="title" style = "width:300px;" value = "<%= board.title %>"/>
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="id">작성자</label> 
+					<input class="form-control" type="text" name="loginid" value = "<%= board.name %>" style = "width:300px;" disabled/>
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="id">작성일</label> 
+					<input class="form-control" type="text" name="date" style = "width:300px;"  value = "<%= board.date %>" disabled/>
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="id">내용</label> 
+					<textarea class="form-control" name="content" style = "width:800px;height: 200px;"  ><%= board.content %></textarea>
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="id">갱신삭제시 비밀번호</label> 
+					<input class="form-control" type="text" name="password" style = "width:300px;"  value = "<%= board.password %>"/>
+				</div>
+				<button class="btn btn-outline-primary btn-sm" type="submit">수정</button>
+			</form>
+			
+
+		<% } %>
+  </form>
+</div>

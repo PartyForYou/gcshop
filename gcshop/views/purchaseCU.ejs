@@ -1,0 +1,124 @@
+<!-- 201935222 김민석 -->
+<div class="container">
+    <% if (cru == 'C') { %>
+        <form action="/purchase/purchase/create_process" method="post">
+            <h2>생성</h2>
+            <input type="hidden" name="loginid" value="<%= id %>">
+            <div class="mb-3">
+                <label class="form-label" for="id">상품명</label>
+                <select name="mer_id" id="mer_id" onchange="updatePrice()">
+                    <% var i = 0; while (i < merchandise.length) { %>
+                        <option value="<%= merchandise[i].mer_id %>" data-price="<%= merchandise[i].price %>">
+                            <%= merchandise[i].name %>
+                        </option>
+                        <% i += 1; } %>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="id">구매자</label>
+                <input class="form-control" type="text" name="id" style="width:300px;" value="<%= who %>" disabled/>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="id">가격</label>
+                <input id="priceField" class="form-control" type="number" name="price" value="<%= merchandise[0].price %>" style="width:300px;" disabled/>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="id">개수</label>
+                <input id="quantityField" class="form-control" type="number" name="qty" value='0' style="width:300px;" oninput="updateTotal()" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="id">총 액수</label>
+                <input id="totalField" class="form-control" type="number" name="total" value='0' style="width:300px;" disabled/>
+            </div>
+            <button class="btn btn-outline-primary btn-sm" type="submit">생성</button>
+        </form>
+    <% } else { %>
+        <form action="/purchase/purchase/update_process" method="post">
+            <h2>수정</h2>
+            <input type="hidden" name="pNum" value="<%= pNum %>">
+            <div class="mb-3">
+                <label class="form-label" for="id">상품명</label>
+                <input class="form-control" type="text" name="name" style="width:300px;" value="<%= merchandise[0].name %>" disabled/>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="id">구매자</label>
+                <input class="form-control" type="text" name="id" style="width:300px;" value="<%= purchase[0].name %>" disabled/>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="id">가격</label>
+                <input id="priceField" class="form-control" type="number" name="price" value="<%= merchandise[0].price %>" style="width:300px;" disabled/>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="id">개수</label>
+                <input id="quantityField" class="form-control" type="number" name="qty" value='<%= merchandise[0].qty %>' style="width:300px;" oninput="updateTotal()" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="id">총 액수</label>
+                <input id="totalField" class="form-control" type="number" name="total" value='<%= merchandise[0].total %>' style="width:300px;" disabled/>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">결제여부</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="payYN" value="Y" <%= merchandise[0].payYN === 'Y' ? 'checked' : '' %>>
+                    <label class="form-check-label" for="payY">Yes</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="payYN" value="N" <%= merchandise[0].payYN === 'N' ? 'checked' : '' %>>
+                    <label class="form-check-label" for="payN">No</label>
+                </div>
+            </div>
+        
+            <div class="mb-3">
+                <label class="form-label">취소</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="cancel" value="Y" <%= merchandise[0].cancel === 'Y' ? 'checked' : '' %>>
+                    <label class="form-check-label" for="cancelY">Yes</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="cancel" value="N" <%= merchandise[0].cancel === 'N' ? 'checked' : '' %>>
+                    <label class="form-check-label" for="cancelN">No</label>
+                </div>
+            </div>
+        
+            <div class="mb-3">
+                <label class="form-label">환불</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="refund" value="Y" <%= merchandise[0].refund === 'Y' ? 'checked' : '' %>>
+                    <label class="form-check-label" for="refundY">Yes</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="refund" value="N" <%= merchandise[0].refund === 'N' ? 'checked' : '' %>>
+                    <label class="form-check-label" for="refundN">No</label>
+                </div>
+            </div>
+            <button class="btn btn-outline-primary btn-sm" type="submit">생성</button>
+        </form>
+    <% } %>
+
+    <script>
+        function updatePrice() {
+            var select = document.getElementById("mer_id");
+            var priceField = document.getElementById("priceField");
+            var selectedOption = select.options[select.selectedIndex];
+            var price = selectedOption.dataset.price;
+
+            // Update the price field
+            priceField.value = price;
+
+            // Update the total field
+            updateTotal();
+        }
+
+        function updateTotal() {
+            var price = parseFloat(document.getElementById("priceField").value);
+            var quantity = parseFloat(document.getElementById("quantityField").value);
+            var totalField = document.getElementById("totalField");
+
+            // Calculate the total amount
+            var total = price * quantity;
+
+            // Update the total field
+            totalField.value = isNaN(total) ? 0 : total;
+        }
+    </script>
+</div>
